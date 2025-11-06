@@ -16,6 +16,8 @@
   "author": "Shay DeWael",
   "license": "MIT",
   "dependencies": {
+    "@modelcontextprotocol/server-puppeteer": "^2025.5.12",
+    "chrome-devtools-mcp": "^0.10.0",
     "discord-interactions": "^4.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2"

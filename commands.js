@@ -47,9 +47,17 @@ const TEST_COMMAND = {
 // Explain command
 const EXPLAIN_COMMAND = {
   name: "explain",
-  description: "Explains how to play the rock paper scissors game",
+  description: "Explains concepts",
   type: 1,
   integration_types: [0, 1],
+  options: [
+    {
+      type: 3,
+      name: "topic",
+      description: "The topic you want explained",
+      required: true,
+    }
+  ],
   contexts: [0, 1, 2],
 };
 

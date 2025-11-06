@@ -101,6 +101,46 @@ On the **General Information** tab, there will be an **Interactions Endpoint URL
 
 Click **Save Changes**, and your app should be ready to run 🚀
 
+## Chrome DevTools MCP Integration
+
+This project now includes the Chrome DevTools MCP (Model Context Protocol) server for browser automation and debugging capabilities.
+
+### What is Chrome DevTools MCP?
+
+Chrome DevTools MCP connects AI coding agents to a live Chrome browser instance, enabling:
+- **Performance Insights:** Record performance traces (Core Web Vitals like LCP, CLS, INP)
+- **Debugging:** Analyze console logs, inspect DOM/CSS, monitor network requests
+- **Automation:** Navigate, fill forms, click elements using Puppeteer
+- **Real-Time Verification:** Test code fixes and UI changes in a live browser
+
+### Running Chrome DevTools MCP
+
+To start the Chrome DevTools MCP server:
+
+```bash
+npx chrome-devtools-mcp
+```
+
+Or run it with your AI agent (example configuration):
+
+```json
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"]
+    }
+  }
+}
+```
+
+### Requirements
+- Node.js v20.19 or newer
+- Chrome stable browser
+- npm
+
+For more information, visit the [Chrome DevTools MCP GitHub repository](https://github.com/ChromeDevTools/chrome-devtools-mcp/).
+
 ## Other resources
 - Read **[the documentation](https://discord.com/developers/docs/intro)** for in-depth information about API features.
 - Browse the `examples/` folder in this project for smaller, feature-specific code examples
