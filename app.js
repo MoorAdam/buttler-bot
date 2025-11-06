@@ -112,6 +112,11 @@ app.post(
           : req.body.user.id;
         const channelId = req.body.channel_id;
 
+        // Defer the reply immediately to avoid 3-second timeout
+        res.send({
+          type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        });
+
         const explanationRequest = {
           topic: topic,
           DiscordUser: userId,
@@ -132,30 +137,40 @@ app.post(
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(explanationRequest),
+              signal: AbortSignal.timeout(10000), // 10 second timeout
             });
 
             const responseData = await response.json();
 
-            console.log("Webhook response data:" . webhookUrl, responseData);
+            console.log(responseData);
 
-            return res.send({
-              type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-              data: {
-                content:
-                  responseData.message.content,
+            // Extract content from n8n response structure
+            const content = responseData?.choices?.[0]?.message?.content 
+              || responseData?.message?.content 
+              || responseData?.content
+              || "No explanation available";
+
+            // Edit the deferred reply with the actual response
+            const endpoint = `webhooks/${process.env.APP_ID}/${req.body.token}/messages/@original`;
+            await DiscordRequest(endpoint, {
+              method: "PATCH",
+              body: {
+                content: content,
               },
             });
           }
         } catch (err) {
           console.error("Error calling webhook:", err);
-          return res.send({
-            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-            data: {
+          // Edit the deferred reply with error message
+          const endpoint = `webhooks/${process.env.APP_ID}/${req.body.token}/messages/@original`;
+          await DiscordRequest(endpoint, {
+            method: "PATCH",
+            body: {
               content: "Sorry, there was an error processing your request.",
-              flags: InteractionResponseFlags.EPHEMERAL,
             },
           });
         }
+        return;
       }
 
       console.error(`unknown command: ${name}`);

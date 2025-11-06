@@ -2,6 +2,10 @@
 
 ## Core Principles
 
+### Environment
+- Target Node.js environment with JavaScript/TypeScript
+- Ensure compatibility with n8n workflows
+
 ### Minimal Dependencies
 - Use as little external libraries as possible
 - Avoid npm libraries if not needed
@@ -25,3 +29,8 @@
 - Keep everything as simple and understandable as possible
 - Favor readability over clever solutions
 - Use straightforward patterns and avoid over-engineering
+
+### Documentation
+- Always create clear and concise documentation
+- Use these documentations to understand the code better
+- Ensure that the documentation is easy to follow for future developers
