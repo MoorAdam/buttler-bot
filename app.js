@@ -105,6 +105,43 @@ app.post(
         });
       }
 
+      // "chucknorris" command
+      if (name === "chucknorris") {
+        // Defer the reply immediately to avoid 3-second timeout
+        res.send({
+          type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        });
+
+        try {
+          // Fetch a random Chuck Norris joke from the free API
+          const response = await fetch("https://api.chucknorris.io/jokes/random");
+          const data = await response.json();
+          
+          // Extract the joke from the response
+          const joke = data.value || "Chuck Norris doesn't need jokes. Jokes need Chuck Norris.";
+          
+          // Edit the deferred reply with the joke
+          const endpoint = `webhooks/${process.env.APP_ID}/${req.body.token}/messages/@original`;
+          await DiscordRequest(endpoint, {
+            method: "PATCH",
+            body: {
+              content: `💪 **Chuck Norris Joke:**\n${joke}`,
+            },
+          });
+        } catch (err) {
+          console.error("Error fetching Chuck Norris joke:", err);
+          // Edit the deferred reply with error message
+          const endpoint = `webhooks/${process.env.APP_ID}/${req.body.token}/messages/@original`;
+          await DiscordRequest(endpoint, {
+            method: "PATCH",
+            body: {
+              content: "Sorry, even Chuck Norris couldn't fetch a joke right now. Try again later!",
+            },
+          });
+        }
+        return;
+      }
+
       if (name === "explain") {
         const topic = req.body.data.options[0].value;
         const userId = req.body.member

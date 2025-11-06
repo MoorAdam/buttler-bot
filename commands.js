@@ -61,9 +61,19 @@ const EXPLAIN_COMMAND = {
   contexts: [0, 1, 2],
 };
 
+// Chuck Norris joke command
+const CHUCK_NORRIS_COMMAND = {
+  name: "chucknorris",
+  description: "Get a random Chuck Norris joke",
+  type: 1,
+  integration_types: [0, 1],
+  contexts: [0, 1, 2],
+};
+
 const ALL_COMMANDS = [
   TEST_COMMAND, 
   // CHALLENGE_COMMAND, 
-  EXPLAIN_COMMAND];
+  EXPLAIN_COMMAND,
+  CHUCK_NORRIS_COMMAND];
 
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
