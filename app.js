@@ -10,6 +10,7 @@ import {
 } from "discord-interactions";
 import { getRandomEmoji, DiscordRequest } from "./utils.js";
 import { getShuffledOptions, getResult } from "./game.js";
+import { getParameterByName } from './config-frontend/backend/database.js';
 
 // Create an express app
 const app = express();
@@ -46,20 +47,39 @@ app.post(
 
       // "test" command
       if (name === "test") {
-        // Send a message into the channel where command was triggered from
-        return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            flags: InteractionResponseFlags.IS_COMPONENTS_V2,
-            components: [
-              {
-                type: MessageComponentTypes.TEXT_DISPLAY,
-                // Fetches a random emoji to send from a helper function
-                content: `hello world ${getRandomEmoji()}`,
-              },
-            ],
-          },
-        });
+        try {
+          // Get test_value from database
+          const param = await getParameterByName('test_value');
+          const value = param ? param.value : 'Not found';
+          
+          // Send a message with the value from database
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              flags: InteractionResponseFlags.IS_COMPONENTS_V2,
+              components: [
+                {
+                  type: MessageComponentTypes.TEXT_DISPLAY,
+                  content: `Test Value: ${value} ${getRandomEmoji()}`,
+                },
+              ],
+            },
+          });
+        } catch (err) {
+          console.error('Error fetching test_value:', err);
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              flags: InteractionResponseFlags.IS_COMPONENTS_V2,
+              components: [
+                {
+                  type: MessageComponentTypes.TEXT_DISPLAY,
+                  content: `Error fetching value from database ${getRandomEmoji()}`,
+                },
+              ],
+            },
+          });
+        }
       }
 
       // "challenge" command

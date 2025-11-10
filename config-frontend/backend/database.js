@@ -121,4 +121,17 @@ export const deleteParameter = (id) => {
   });
 };
 
+// Get parameter by name
+export const getParameterByName = (name) => {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM parameters WHERE name = ?', [name], (err, row) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(row);
+      }
+    });
+  });
+};
+
 export default db;
