@@ -7,6 +7,7 @@ import {
   updateParameter,
   deleteParameter
 } from './database.js';
+import { getCommandsFromFile } from './commands.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -128,7 +129,7 @@ app.put('/api/parameters/:id', async (req, res) => {
   }
 });
 
-// DELETE /api/parameters/:id - Delete parameter
+// DELETE /api/parameters/:id - Delete parameterd
 app.delete('/api/parameters/:id', async (req, res) => {
   try {
     const result = await deleteParameter(req.params.id);
@@ -140,6 +141,27 @@ app.delete('/api/parameters/:id', async (req, res) => {
     res.json({ success: true, message: 'Parameter deleted successfully' });
   } catch (error) {
     console.error('Error deleting parameter:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// GET /api/commands - Get all commands from bot's commands.js file
+app.get('/api/commands', async (req, res) => {
+  try {
+    const commands = await getCommandsFromFile();
+    
+    // Add additional information if needed
+    const enrichedCommands = commands.map((cmd, index) => ({
+      id: index + 1,
+      name: cmd.name,
+      description: cmd.description,
+      active: cmd.active,
+      options: cmd.options || []
+    }));
+    
+    res.json({ success: true, data: enrichedCommands });
+  } catch (error) {
+    console.error('Error fetching commands:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });

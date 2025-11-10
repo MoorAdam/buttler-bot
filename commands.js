@@ -61,6 +61,22 @@ const EXPLAIN_COMMAND = {
   contexts: [0, 1, 2],
 };
 
+const YES_COMMAND = {
+  name: "yes",
+  description: "A test YES command",
+  type: 1,
+  integration_types: [0, 1],
+  options: [
+    {
+      type: 3,
+      name: "topic",
+      description: "The topic you want explained",
+      required: true,
+    }
+  ],
+  contexts: [0, 1, 2],
+};
+
 // Chuck Norris joke command
 const CHUCK_NORRIS_COMMAND = {
   name: "chucknorris",
@@ -72,6 +88,7 @@ const CHUCK_NORRIS_COMMAND = {
 
 const ALL_COMMANDS = [
   TEST_COMMAND, 
+  YES_COMMAND,
   // CHALLENGE_COMMAND, 
   EXPLAIN_COMMAND,
   CHUCK_NORRIS_COMMAND];
