@@ -134,7 +134,8 @@ app.post(
 
         try {
           // Fetch a random Chuck Norris joke from the free API
-          const response = await fetch("https://api.chucknorris.io/jokes/random");
+          const apiUrl = await getParameterByName('chucknorris_api_url');
+          const response = await fetch(apiUrl);
           const data = await response.json();
           
           // Extract the joke from the response
