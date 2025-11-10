@@ -16,6 +16,35 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
+/* Navigation styles */
+.navigation {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 0;
+}
+
+.navLink {
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  color: #666;
+  font-weight: 600;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  margin-bottom: -2px;
+}
+
+.navLink:hover {
+  color: #667eea;
+  background: #f8f9fa;
+}
+
+.navLinkActive {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
 .title {
   margin: 0 0 0.5rem 0;
   font-size: 2.5rem;
@@ -27,6 +56,48 @@
   margin: 0 0 2rem 0;
   color: #666;
   font-size: 1.1rem;
+}
+
+/* Commands grid styles */
+.commandsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.commandTile {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s;
+  cursor: default;
+}
+
+.commandTile:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+}
+
+.commandHeader {
+  margin-bottom: 1rem;
+}
+
+.commandName {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #667eea;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+.commandDescription {
+  margin: 0;
+  color: #555;
+  line-height: 1.6;
+  font-size: 0.95rem;
 }
 
 .error {

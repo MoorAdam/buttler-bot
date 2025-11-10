@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Head from "next/head";
+import Link from "next/link";
 import styles from "@/styles/Home.module.css";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
@@ -153,6 +154,15 @@ export default function Home() {
 
       <div className={styles.container}>
         <main className={styles.main}>
+          <div className={styles.navigation}>
+            <Link href="/" className={`${styles.navLink} ${styles.navLinkActive}`}>
+              Configuration
+            </Link>
+            <Link href="/commands" className={styles.navLink}>
+              Commands
+            </Link>
+          </div>
+
           <h1 className={styles.title}>Bot Configuration</h1>
           <p className={styles.description}>Manage your bot parameters</p>
 
